@@ -2,6 +2,15 @@
 import random
 # restaurants_data = open('scores.txt')
 
+# def new_rating():
+#     while True:
+#         rating = int(raw_input("What is your standard good sir/madame? "))
+#         if 1 > rating or rating > 5:
+#             print "Oops, rating out of range!"
+#         else:
+#             break
+#     return rating
+    
 
 def load_restaurants(file_name):
     """populates restaurants dictionary"""
@@ -34,11 +43,10 @@ def add_restaurant(restaurants):
             print "Oops, rating out of range!"
         else:
             break
-
     restaurants[restaurant] = rating
 
 
-def edit_restaurant(restaurants):
+def edit_random_restaurant(restaurants):
     """ edit random restaurant's rating """
     random_restaurant = random.choice(restaurants.keys())
     print "{} is currently rated at {}".format(random_restaurant,
@@ -48,17 +56,29 @@ def edit_restaurant(restaurants):
     print "{}'s rating has been updated to {}.".format(random_restaurant,
                                                        new_rating)
 
+def edit_restaurant(restaurants):
+    """ update a chosen restaurant's rating """
+    restaurant = raw_input(("Which respectable nutrient insertion factory would"
+                            " you like to judge? ")).title()
+    print "{} is currently rated at {}".format(restaurant,
+                                               restaurants[restaurant])
+    new_rating = int(raw_input("New rating: "))
+    restaurants[restaurant] = new_rating()
+    print "{}'s rating has been updated to {}.".format(restaurant,
+                                                       new_rating)
+
 
 def run_interface():
     """main program"""
     restaurants = load_restaurants('scores.txt')
     while True:
-        desire = raw_input("What would you like to do?\n"
+        desire = raw_input("\nWhat would you like to do?\n"
                            "a: See all ratings (alphabetical by restaurant)\n"
                            "b: Add new restaurant\n"
                            "c: Update random restaurant's rating\n"
+                           "d: Update a restaurant's rating\n"
                            "q: Quit\n"
-                           ">")
+                           "> ")
         desire = desire.lower()
 
         if desire == 'a':
@@ -66,6 +86,8 @@ def run_interface():
         elif desire == 'b':
             add_restaurant(restaurants)
         elif desire == 'c':
+            edit_random_restaurant(restaurants)
+        elif desire == 'd':
             edit_restaurant(restaurants)
         elif desire == 'q':
             return
